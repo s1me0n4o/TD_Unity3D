@@ -19,7 +19,6 @@ public class WaveSpowner : MonoBehaviour
     {
         if (countDown <= 0f)
         {
-            print(countDown);
             StartCoroutine(SpownWave());
             countDown = timeBetweenWaves;
         }
