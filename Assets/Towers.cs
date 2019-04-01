@@ -7,10 +7,7 @@ public class Towers : MonoBehaviour
 {
     [Header("Attributes")]
     [SerializeField] float range = 6f;
-    [SerializeField] float fireRate = 1f;
-    [SerializeField] float fireCountDown = 3f;
     [Header("Instances")]
-    [SerializeField] GameObject bullet;
     [SerializeField] Transform firePoint;
     private Transform target;
     
@@ -22,14 +19,7 @@ public class Towers : MonoBehaviour
     void Update()
     {
         RotateTower();
-
-        if (fireCountDown <= 0)
-        {
-            Shoot();
-            fireCountDown = 1f / fireRate;
-        }
-
-        fireCountDown -= Time.deltaTime;
+        Shoot();
     }
 
     void UpdateEnemy()
@@ -58,7 +48,6 @@ public class Towers : MonoBehaviour
         }
     }
 
-
     void RotateTower()
     {
         if (target == null)
@@ -70,7 +59,21 @@ public class Towers : MonoBehaviour
 
     private void Shoot()
     {
-        Instantiate(bullet, firePoint.position, firePoint.rotation);
+        if (target == null)
+        {
+            return;
+        }
+        else
+        {
+            if (Vector3.Distance(this.transform.position, target.transform.position) <= range)
+            {
+                firePoint.gameObject.SetActive(true);
+            }
+            else
+            {
+                firePoint.gameObject.SetActive(false);
+            }
+        }
     }
     
     //Draw a sphere for the tower range

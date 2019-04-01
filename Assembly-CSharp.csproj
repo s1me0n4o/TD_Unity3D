@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Enemy.cs" />
+     <Compile Include="Assets\EnemyDamage.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
