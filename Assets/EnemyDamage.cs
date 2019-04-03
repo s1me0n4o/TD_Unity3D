@@ -18,6 +18,7 @@ public class EnemyDamage : MonoBehaviour
             other.SetActive(false);
             
          //TODO destroy the PS after 3-5 sec
+
             //Invoke("DestroyPS(ps)", 5f);
             if(ps && ps.GetComponent<ParticleSystem>().IsAlive())
             {
@@ -27,6 +28,9 @@ public class EnemyDamage : MonoBehaviour
         }
 
     }
+
+    //TODO Destroy the particle effect
+
 
     //public void DestroyPS(GameObject ps)
     //{
