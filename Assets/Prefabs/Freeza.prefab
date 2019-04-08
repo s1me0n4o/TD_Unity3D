@@ -4798,7 +4798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e941a11f40b8494eb55b39da396d7b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 3
+  range: 4
   firePoint: {fileID: 5019816694756904763}
 --- !u!1 &7158718386970159737
 GameObject:

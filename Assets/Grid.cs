@@ -5,7 +5,9 @@ using UnityEngine;
 public class Grid : MonoBehaviour
 {
     [SerializeField] Color hoverColor = Color.blue;
-    [SerializeField] GameObject tower;
+   // [SerializeField] GameObject tower;
+
+    BuildManager buildManager;
 
     //storing the mesh renderer material color in var so we can cash it at the start of our game
     private Renderer rend;
@@ -17,11 +19,20 @@ public class Grid : MonoBehaviour
     {
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
+
+        buildManager = BuildManager.instance;
     }
 
     void OnMouseEnter()
     {
-        rend.material.color = hoverColor;
+        if (buildManager.GetTowerToBuild() == null)
+        {
+            return;
+        }
+        else
+        {
+            rend.material.color = hoverColor;
+        }
     }
 
     void OnMouseExit()
@@ -31,11 +42,20 @@ public class Grid : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (!isTaken && Input.GetMouseButtonDown(0))
+        if (buildManager.GetTowerToBuild() == null)
         {
-            Instantiate(tower, new Vector3 (this.transform.position.x, 2f, this.transform.position.z), Quaternion.identity);
-            isTaken = true;
+            return;
         }
-     
+        else
+        {
+            print("Test");
+            if (!isTaken && Input.GetMouseButtonDown(0))
+            {
+                print("gettingTower");
+                GameObject newTower = buildManager.GetTowerToBuild();
+                newTower = (GameObject)Instantiate(newTower, new Vector3(this.transform.position.x, 2f, this.transform.position.z), Quaternion.identity);
+                isTaken = true;
+            }
+        }     
     }
 }
