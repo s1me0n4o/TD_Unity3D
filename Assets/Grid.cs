@@ -48,10 +48,8 @@ public class Grid : MonoBehaviour
         }
         else
         {
-            print("Test");
             if (!isTaken && Input.GetMouseButtonDown(0))
             {
-                print("gettingTower");
                 GameObject newTower = buildManager.GetTowerToBuild();
                 newTower = (GameObject)Instantiate(newTower, new Vector3(this.transform.position.x, 2f, this.transform.position.z), Quaternion.identity);
                 isTaken = true;

@@ -32,7 +32,6 @@ public class BuildManager : MonoBehaviour
 
     public GameObject GetTowerToBuild()
     {
-        print("towertoBuild");
         return towerToBuild;
     }
 

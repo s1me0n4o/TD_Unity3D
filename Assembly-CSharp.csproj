@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\BuildManager.cs" />
+     <Compile Include="Assets\Bullet.cs" />
      <Compile Include="Assets\CameraMovement.cs" />
      <Compile Include="Assets\Enemy.cs" />
      <Compile Include="Assets\EnemyDamage.cs" />

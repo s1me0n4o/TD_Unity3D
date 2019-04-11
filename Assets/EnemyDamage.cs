@@ -5,35 +5,20 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour
 {
     [SerializeField] GameObject ps;
-    private int health = Enemy.health;
-    private int hitCounter = 0;
-    
-   private void OnParticleCollision(GameObject other)
+    public int health = Enemy.health;
+    public int hitCounter = 0;
+
+    public void Collided(bool isCollided)
     {
-        hitCounter += 1;
-        if (health - hitCounter <= 0)
+        if (isCollided)
         {
-            Destroy(gameObject);
-            Instantiate(ps, gameObject.transform.position, Quaternion.identity);
-            other.SetActive(false);
-            
-         //TODO destroy the PS after 3-5 sec
-
-            //Invoke("DestroyPS(ps)", 5f);
-            if(ps && ps.GetComponent<ParticleSystem>().IsAlive())
+            hitCounter += 1;
+            if (health - hitCounter <= 0)
             {
-                Destroy(ps, 3f);
+                Destroy(gameObject);
+                GameObject EffectInsert = Instantiate(ps, gameObject.transform.position, Quaternion.identity);
+                Destroy(EffectInsert, 5f);
             }
-            return;
         }
-
     }
-
-    //TODO Destroy the particle effect
-
-
-    //public void DestroyPS(GameObject ps)
-    //{
-    //    DestroyImmediate(ps, true);
-    //}
 }

@@ -8,9 +8,11 @@ public class Towers : MonoBehaviour
     [Header("Attributes")]
     [SerializeField] float range = 6f;
     [Header("Instances")]
-    [SerializeField] Transform firePoint;
+    [SerializeField] GameObject firePoint;
+    [SerializeField] float fireCountDown = 0f;
+    private float fireRate = 1f;
     private Transform target;
-    
+
     void Start()
     {
         InvokeRepeating("UpdateEnemy", 0f, 0.5f); // string ref
@@ -19,7 +21,12 @@ public class Towers : MonoBehaviour
     void Update()
     {
         RotateTower();
-        Shoot();
+        if (fireCountDown <= 0)
+        {
+            Shoot();
+            fireCountDown = 1f / fireRate;
+        }
+        fireCountDown -= Time.deltaTime;
     }
 
     void UpdateEnemy()
@@ -68,6 +75,13 @@ public class Towers : MonoBehaviour
             if (Vector3.Distance(this.transform.position, target.transform.position) <= range)
             {
                 firePoint.gameObject.SetActive(true);
+
+                GameObject BulletGO = Instantiate(firePoint, firePoint.transform.position, Quaternion.identity);
+                Bullet bullet = BulletGO.GetComponent<Bullet>(); ;
+                if (bullet != null)
+                {
+                    bullet.SeekTarget(target);
+                }
             }
             else
             {

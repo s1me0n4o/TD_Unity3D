@@ -13,14 +13,12 @@ public class Shop : MonoBehaviour
 
     public void BuildTower1()
     {
-        Debug.Log("ok1");   
         //pick tower 1
         buildManager.SetTowerToBuild(buildManager.tower1);
     }
 
     public void BuildTower2()
     {
-        Debug.Log("ok2");
         //pick tower 2
         buildManager.SetTowerToBuild(buildManager.tower2); 
     }
