@@ -1,11 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Grid : MonoBehaviour
 {
     [SerializeField] Color hoverColor = Color.blue;
-   // [SerializeField] GameObject tower;
+    [SerializeField] Color notEnoughMoneyColor = Color.red;
 
     BuildManager buildManager;
 
@@ -13,7 +13,10 @@ public class Grid : MonoBehaviour
     private Renderer rend;
     private Color startColor;
 
-    public bool isTaken = false;
+    [Header("Optinal prefab")]
+    public GameObject tower;
+
+    public Vector3 posOffset;
 
     void Start()
     {
@@ -25,9 +28,19 @@ public class Grid : MonoBehaviour
 
     void OnMouseEnter()
     {
-        if (buildManager.GetTowerToBuild() == null)
+        if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
+        }
+
+        if (!buildManager.CanBuld)
+        {
+            return;
+        }
+
+        if (!buildManager.HasMoney)
+        {
+            rend.material.color = notEnoughMoneyColor;
         }
         else
         {
@@ -38,22 +51,29 @@ public class Grid : MonoBehaviour
     void OnMouseExit()
     {
         rend.material.color = startColor;
-    }
+    }   
 
     void OnMouseDown()
     {
-        if (buildManager.GetTowerToBuild() == null)
+        if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
-        else
+
+        if (!buildManager.CanBuld)
         {
-            if (!isTaken && Input.GetMouseButtonDown(0))
-            {
-                GameObject newTower = buildManager.GetTowerToBuild();
-                newTower = (GameObject)Instantiate(newTower, new Vector3(this.transform.position.x, 2f, this.transform.position.z), Quaternion.identity);
-                isTaken = true;
-            }
-        }     
+            return;
+        }
+
+        if (tower != null)
+        {
+            print("Cant Build There!");
+            return;
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            buildManager.BuildOn(this);
+        }
     }
+
 }

@@ -7,12 +7,13 @@ public class BuildManager : MonoBehaviour
 
     public static BuildManager instance;
 
-    //pick a tower
-    public GameObject tower1;
-    public GameObject tower2;
+    ////pick a tower
+    //public GameObject tower1;
+    //public GameObject tower2;
 
     //check if its null at the start
-    private GameObject towerToBuild;
+    private TowerBluePrint towerToBuild;
+    private Vector3 towerToBuildPos;
 
     void Awake()
     {
@@ -24,15 +25,28 @@ public class BuildManager : MonoBehaviour
         instance = this;
     }
 
-    //call it from other method to change the tower to build
-    public void SetTowerToBuild(GameObject tower)
+    public bool CanBuld { get { return towerToBuild != null; } }
+    public bool HasMoney { get { return PlayerStatistics.money >= towerToBuild.price; } }
+
+
+    public void SelectTowerToBuild(TowerBluePrint tower)
     {
         towerToBuild = tower;
     }
 
-    public GameObject GetTowerToBuild()
+    public void BuildOn(Grid grid)
     {
-        return towerToBuild;
-    }
+        if (PlayerStatistics.money < towerToBuild.price)
+        {
+            print("Not Enough Money!");
+            return;
+        }
 
+        PlayerStatistics.money -= towerToBuild.price; 
+
+        GameObject tower = Instantiate(towerToBuild.prefab, grid.transform.position + towerToBuild.offsetPos, Quaternion.identity);
+        grid.tower = tower;
+
+        print("Money Left " + PlayerStatistics.money);
+    }
 }

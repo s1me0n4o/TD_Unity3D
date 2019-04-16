@@ -17,6 +17,8 @@ public class WaveSpowner : MonoBehaviour
 
     void Update()
     {
+        countDown = Mathf.Clamp(countDown, 0f, Mathf.Infinity);
+
         if (countDown <= 0f)
         {
             StartCoroutine(SpownWave());
@@ -25,7 +27,8 @@ public class WaveSpowner : MonoBehaviour
 
 //it will reduse countDown by 1 every second
         countDown -= Time.deltaTime;
-        textTimer.text = Mathf.Round(countDown).ToString();
+
+        textTimer.text = string.Format("{0:00.00}", countDown);
     }
 
     IEnumerator SpownWave()

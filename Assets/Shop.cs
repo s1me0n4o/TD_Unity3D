@@ -5,21 +5,24 @@ using UnityEngine;
 public class Shop : MonoBehaviour
 {
     BuildManager buildManager;
+    public TowerBluePrint tower1;
+    public TowerBluePrint tower2;
+
 
     void Start()
     {
         buildManager = BuildManager.instance;
     }
 
-    public void BuildTower1()
+    public void SelectTower1()
     {
-        //pick tower 1
-        buildManager.SetTowerToBuild(buildManager.tower1);
+        Debug.Log("You have selected Frieza");
+        buildManager.SelectTowerToBuild(tower1);
     }
 
-    public void BuildTower2()
+    public void SelectTower2()
     {
-        //pick tower 2
-        buildManager.SetTowerToBuild(buildManager.tower2); 
+        Debug.Log("You have selected Bou");
+        buildManager.SelectTowerToBuild(tower2); 
     }
 }
