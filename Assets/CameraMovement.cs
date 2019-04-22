@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -30,6 +28,10 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.isOver)
+        {
+            this.enabled = false;
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

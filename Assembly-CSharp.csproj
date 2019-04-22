@@ -58,7 +58,10 @@
      <Compile Include="Assets\CameraMovement.cs" />
      <Compile Include="Assets\Enemy.cs" />
      <Compile Include="Assets\EnemyDamage.cs" />
+     <Compile Include="Assets\GameManager.cs" />
+     <Compile Include="Assets\GameOver.cs" />
      <Compile Include="Assets\Grid.cs" />
+     <Compile Include="Assets\LivesUpdateUI.cs" />
      <Compile Include="Assets\PlayerStatistics.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />

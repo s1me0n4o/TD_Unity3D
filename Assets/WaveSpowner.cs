@@ -34,6 +34,7 @@ public class WaveSpowner : MonoBehaviour
     IEnumerator SpownWave()
     {
         waveNumb++;
+        PlayerStatistics.rounds++;
 
         for (int i = 0; i < waveNumb; i++)
         {

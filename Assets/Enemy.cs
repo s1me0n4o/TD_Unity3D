@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float speed = 10f;
     public static int health = 3;
+    public static int enemyCurrency = 20;
 
     private Transform target;
     private int waypointIndex = 0;
@@ -26,7 +27,7 @@ public class Enemy : MonoBehaviour
         {
             if (waypointIndex >= Waypoints.waypoints.Length - 1)
             {
-                Destroy(this.gameObject);
+                EndPath();
 //Sometimes Destroy needs some time to clean the whole object and if we dont use return we can get index out of range
                 return;
             }
@@ -36,6 +37,12 @@ public class Enemy : MonoBehaviour
             target = Waypoints.waypoints[waypointIndex];
         }
 
+    }
+
+    void EndPath()
+    {
+        PlayerStatistics.lives--;
+        Destroy(this.gameObject);
     }
 
 }
