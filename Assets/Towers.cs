@@ -1,14 +1,27 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Towers : MonoBehaviour
 {
+    [Header("Laser")]
+    public bool useLaser = false;
+    public ParticleSystem impactEffect;
+    public LineRenderer lineRenderer;
+    public Light impactLight;
+    public float slowPercent = 0.5f;
+
     [Header("Attributes")]
     [SerializeField] float range = 6f;
+    public float damageOverTime = 0.5f;
+
     [Header("Instances")]
     [SerializeField] GameObject firePoint;
     [SerializeField] float fireCountDown = 0f;
+
     private float fireRate = 1f;
     private Transform target;
+    private EnemyDamage targetEnemyForDMG;
+    private Enemy targetEnemy;
 
     void Start()
     {
@@ -17,13 +30,72 @@ public class Towers : MonoBehaviour
 
     void Update()
     {
-        RotateTower();
-        if (fireCountDown <= 0)
+        if (target == null)
         {
-            Shoot();
-            fireCountDown = 1f / fireRate;
+            if (useLaser)
+            {
+                if (lineRenderer.enabled)
+                {
+                    lineRenderer.enabled = false;
+                    impactEffect.Stop();
+                    impactLight.enabled = false;
+                }
+            }
+
+            return;
         }
-        fireCountDown -= Time.deltaTime;
+        RotateTower();
+
+        if (useLaser)
+        {
+            Laser();
+        }
+        else
+        {
+            if (fireCountDown <= 0)
+            {
+                Shoot();
+                fireCountDown = 1f / fireRate;
+            }
+            fireCountDown -= Time.deltaTime;
+        }
+    }
+
+    private void Laser()
+    {
+        //slow
+        targetEnemy.SlowEnemy(slowPercent);
+        
+        //damage
+        //TODO Change the DMG
+        targetEnemyForDMG.health = targetEnemyForDMG.health * ( (1f - damageOverTime) * Time.deltaTime);
+        print(targetEnemyForDMG.health);
+
+
+        if (targetEnemyForDMG.health <= 0)
+        {
+            targetEnemyForDMG.DestroyEnemy(); 
+        }
+
+        //graphics
+        if (!lineRenderer.enabled)
+        {
+            lineRenderer.enabled = true;
+            impactEffect.Play();
+            impactLight.enabled = true;
+        }
+
+        Vector3 dirFromEnemyToTower = firePoint.transform.position - target.position;
+
+        impactEffect.transform.position = target.position + dirFromEnemyToTower.normalized * 0.5f;
+        impactEffect.transform.rotation = Quaternion.LookRotation(dirFromEnemyToTower);
+        
+        //seting the fire point
+        lineRenderer.SetPosition(0, firePoint.transform.position);
+        //setting the target
+        lineRenderer.SetPosition(1, target.position);
+
+
     }
 
     void UpdateEnemy()
@@ -45,6 +117,8 @@ public class Towers : MonoBehaviour
         if (nearestTarget != null && shortestDistanceToEnemy <= range)
         {
             target = nearestTarget.transform;
+            targetEnemyForDMG = nearestTarget.GetComponent<EnemyDamage>();
+            targetEnemy = nearestTarget.GetComponent<Enemy>();
         }
         else
         {
