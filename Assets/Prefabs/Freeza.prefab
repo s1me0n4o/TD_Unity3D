@@ -4744,7 +4744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b3f06d8fe04a249b3a1e9ae5daffd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 10
 --- !u!1 &1686061807250842793
 GameObject:
   m_ObjectHideFlags: 0
@@ -14228,10 +14228,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e941a11f40b8494eb55b39da396d7b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useLaser: 0
+  impactEffect: {fileID: 0}
+  lineRenderer: {fileID: 0}
+  impactLight: {fileID: 0}
+  slowPercent: 0.5
   range: 4
+  damageOverTime: 125
   firePoint: {fileID: 1686061807084551045}
   fireCountDown: 0
-  possOffset: {x: 0, y: 2, z: 0}
 --- !u!1 &7158718386970159737
 GameObject:
   m_ObjectHideFlags: 0

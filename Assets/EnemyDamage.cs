@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyDamage : MonoBehaviour
 {
@@ -7,15 +8,23 @@ public class EnemyDamage : MonoBehaviour
     public int hitCounter = 0;
     public int enemyCurrency = Enemy.enemyCurrency;
 
+    public Image HealthBar;
+    
     public void Collided(bool isCollided)
     {
         if (isCollided)
         {
-            hitCounter += 1;
-            if (health - hitCounter <= 0)
-            {
-                DestroyEnemy();
-            }
+            GetDMG();
+        }
+    }
+
+    private void GetDMG()
+    {
+        hitCounter += 1;
+        HealthBar.fillAmount = 1f / (health - hitCounter);
+        if (health - hitCounter <= 0)
+        {
+            DestroyEnemy();
         }
     }
 
@@ -24,8 +33,10 @@ public class EnemyDamage : MonoBehaviour
         PlayerStatistics.money += enemyCurrency;
 
         Destroy(gameObject);
+        WaveSpowner.enemyAliveCount--;
         GameObject EffectInsert = Instantiate(ps, gameObject.transform.position, Quaternion.identity);
         Destroy(EffectInsert, 5f);
+
     }
 
 }

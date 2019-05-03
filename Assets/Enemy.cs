@@ -19,8 +19,6 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-
-
         //setting the direction that our enemy should go and appling the movement
         Vector3 dir = target.position - this.transform.position;
         transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
@@ -51,6 +49,7 @@ public class Enemy : MonoBehaviour
     void EndPath()
     {
         PlayerStatistics.lives--;
+        WaveSpowner.enemyAliveCount--;
         Destroy(this.gameObject);
     }
 

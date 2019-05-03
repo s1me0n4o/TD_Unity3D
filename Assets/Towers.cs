@@ -68,9 +68,9 @@ public class Towers : MonoBehaviour
         
         //damage
         //TODO Change the DMG
-        targetEnemyForDMG.health = targetEnemyForDMG.health * ( (1f - damageOverTime) * Time.deltaTime);
-        print(targetEnemyForDMG.health);
-
+        targetEnemyForDMG.health = targetEnemyForDMG.health * (1f - 0.2f * damageOverTime * Time.deltaTime);
+        print(targetEnemyForDMG.health + "health");
+        print(damageOverTime * Time.deltaTime);
 
         if (targetEnemyForDMG.health <= 0)
         {
